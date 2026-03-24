@@ -1,6 +1,6 @@
 package com.clue.responses;
 
-import com.clue.entities.MessageEntity;
+import com.clue.entities.template.MessageEntity;
 
 public class MessageModel {
     private int id;

@@ -1,6 +1,7 @@
 package com.clue.controllers;
 
-import com.clue.entities.*;
+import com.clue.entities.BasicUser;
+import com.clue.entities.template.*;
 import com.clue.responses.BasicResponse;
 import com.clue.service.Persist;
 import org.json.JSONObject;

@@ -1,12 +1,17 @@
 package com.clue.entities;
 
+import com.clue.entities.template.UserEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
-public class StoryEntity extends BaseEntity{
+public class GameEntity extends BaseEntity{
+    private BasicUser user;
     private String fullStory;
     private String brief;
     private List<SuspectEntity> suspects;
     private List<ItemEntity> items;
+    private int Status; //0 - started; 1 - finished
 
     public String getFullStory() {
         return fullStory;

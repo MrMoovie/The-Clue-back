@@ -1,5 +1,5 @@
 package com.clue.responses;
-import com.clue.entities.CategoryEntity;
+import com.clue.entities.template.CategoryEntity;
 
 public class CategoryModel {
     private String name;

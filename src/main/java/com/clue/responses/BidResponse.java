@@ -1,7 +1,7 @@
 package com.clue.responses;
 
-import com.clue.entities.BidEntity;
-import com.clue.entities.MessageEntity;
+import com.clue.entities.template.BidEntity;
+import com.clue.entities.template.MessageEntity;
 
 import java.util.List;
 

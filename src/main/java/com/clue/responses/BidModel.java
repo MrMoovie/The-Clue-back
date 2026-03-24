@@ -1,6 +1,6 @@
 package com.clue.responses;
 
-import com.clue.entities.BidEntity;
+import com.clue.entities.template.BidEntity;
 
 public class BidModel {
     private int id;

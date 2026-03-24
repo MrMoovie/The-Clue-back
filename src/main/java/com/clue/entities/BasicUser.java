@@ -1,12 +1,11 @@
 package com.clue.entities;
 
-public class BasicUser extends BaseEntity{
+public class BasicUser extends BaseEntity {
     private String username;
     private String password;
     private String token;
     private String fullName;
     private String contactInfo;
-
     public String getUsername() {
         return username;
     }

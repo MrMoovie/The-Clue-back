@@ -1,7 +1,8 @@
 package com.clue.service;
 
 
-import com.clue.entities.*;
+import com.clue.entities.BasicUser;
+import com.clue.entities.template.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

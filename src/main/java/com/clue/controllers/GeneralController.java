@@ -1,6 +1,9 @@
 package com.clue.controllers;
 
-import com.clue.entities.*;
+import com.clue.entities.BaseEntity;
+import com.clue.entities.BasicUser;
+import com.clue.entities.SuspectEntity;
+import com.clue.entities.template.*;
 import com.clue.responses.*;
 import com.clue.service.Persist;
 import com.clue.utils.GeneralUtils;
@@ -22,7 +25,6 @@ public class GeneralController {
     @PostConstruct
     public void init() {
     }
-
 
     @RequestMapping ("/login")
     public BasicResponse getUser (String username, String password, int selectedType) {
@@ -113,6 +115,26 @@ public class GeneralController {
     
     @RequestMapping("/get-user-posts")
     public BasicResponse getUserPosts(String token) {
+
+        SuspectEntity sus;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         ClientEntity clientEntity = persist.getClientByToken(token);
         if (clientEntity != null) {
             List<PostEntity> posts = persist.getPostsByClientId(clientEntity.getId()).stream().filter(post -> !post.isDeleted()).toList();

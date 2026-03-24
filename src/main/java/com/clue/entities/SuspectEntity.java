@@ -4,6 +4,7 @@ public class SuspectEntity extends BaseEntity{
     private String name;
     private String backGround;
     private String pov;
+    private String chatHistory;
 
     public String getName() {
         return name;
@@ -27,5 +28,13 @@ public class SuspectEntity extends BaseEntity{
 
     public void setPov(String pov) {
         this.pov = pov;
+    }
+
+    public String getChatHistory() {
+        return chatHistory;
+    }
+
+    public void addChatHistory(String chatHistory, String role) {
+        this.chatHistory = chatHistory;
     }
 }
