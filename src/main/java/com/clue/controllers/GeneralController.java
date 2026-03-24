@@ -1,7 +1,7 @@
 package com.clue.controllers;
 
 import com.clue.entities.BaseEntity;
-import com.clue.entities.BasicUser;
+import com.clue.entities.PlayerEntity;
 import com.clue.entities.SuspectEntity;
 import com.clue.entities.template.*;
 import com.clue.responses.*;
@@ -65,7 +65,7 @@ public class GeneralController {
     public BasicResponse addUser(int selectedType,String username,String password,String fullName,String address,String areas,int plan,String contactInfo) {
         try {
             if (username != null  && password != null && fullName != null && selectedType != 0 && contactInfo != null) {
-                BasicUser userEntity = persist.getUserByUsername(username);
+                PlayerEntity userEntity = persist.getUserByUsername(username);
                 if (userEntity != null) {
                     return new BasicResponse(false,ERROR_USERNAME_ALREADY_EXISTS);
                 }else {
@@ -158,8 +158,8 @@ public class GeneralController {
     }
     @RequestMapping("/get-all-categories")
     public BasicResponse getAllCategories(String token) {
-        BasicUser basicUser = persist.getUserByToken(token);
-        if (basicUser != null) {
+        PlayerEntity playerEntity = persist.getUserByToken(token);
+        if (playerEntity != null) {
             List<CategoryEntity> categories = persist.getAllCategories().stream().filter(category -> !category.isDeleted()).toList();
             return new CategoriesResponse(true, null, categories);
         } else {
@@ -169,9 +169,9 @@ public class GeneralController {
 
     @RequestMapping("/get-default-params")
     public BasicResponse getDefaultParams (String token) {
-        BasicUser basicUser = persist.getUserByToken(token);
-        if (basicUser != null) {
-            return new DefaultParamResponse(true, null, basicUser);
+        PlayerEntity playerEntity = persist.getUserByToken(token);
+        if (playerEntity != null) {
+            return new DefaultParamResponse(true, null, playerEntity);
         } else {
             return new BasicResponse(false, ERROR_WRONG_CREDENTIALS);
         }

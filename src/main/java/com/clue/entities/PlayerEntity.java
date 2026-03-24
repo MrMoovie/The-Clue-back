@@ -1,6 +1,8 @@
 package com.clue.entities;
 
-public class BasicUser extends BaseEntity {
+import java.util.List;
+
+public class PlayerEntity extends BaseEntity {
     private String username;
     private String password;
     private String token;

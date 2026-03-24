@@ -1,6 +1,6 @@
 package com.clue.controllers;
 
-import com.clue.entities.BasicUser;
+import com.clue.entities.PlayerEntity;
 import com.clue.entities.template.*;
 import com.clue.responses.BasicResponse;
 import com.clue.service.Persist;
@@ -33,7 +33,7 @@ public class LiveChatController {
 
     }
 
-    private void sendMessage (boolean typing, BasicUser sender, BasicUser receiver, String message) {
+    private void sendMessage (boolean typing, PlayerEntity sender, PlayerEntity receiver, String message) {
         System.out.println("Sending message to token " + receiver.getToken());
         List<SseEmitter> sessions = this.subscribers.get(receiver.getToken());
         if (sessions != null) {

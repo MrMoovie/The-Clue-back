@@ -1,7 +1,7 @@
 package com.clue.service;
 
 
-import com.clue.entities.BasicUser;
+import com.clue.entities.PlayerEntity;
 import com.clue.entities.template.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -58,8 +58,8 @@ public class Persist {
     }
 
 
-    public BasicUser getUserByUsername(String username) {
-        BasicUser user = getClientByUsername(username);
+    public PlayerEntity getUserByUsername(String username) {
+        PlayerEntity user = getClientByUsername(username);
         if (user == null) {
             user = getProffesionalByUsername(username);
         }
@@ -151,8 +151,8 @@ public class Persist {
                 .uniqueResult();
     }
 
-    public BasicUser getUserByToken(String token) {
-        BasicUser user = getClientByToken(token);
+    public PlayerEntity getUserByToken(String token) {
+        PlayerEntity user = getClientByToken(token);
         if (user == null) {
             user = getProfessionalByToken(token);
         }
