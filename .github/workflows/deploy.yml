@@ -1,4 +1,4 @@
-name: Deploy Java Backend
+name: Deploy Java Quiz Backend
 
 on:
   push:
@@ -11,14 +11,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Build Docker Image
-      run: docker build -t quiz-backend .
-
-    - name: Stop Old Container
-      run: docker stop backend-container || true
-
-    - name: Remove Old Container
-      run: docker rm backend-container || true
-
-    - name: Run New Container
-      run: docker run -d -p 8080:8080 --name backend-container quiz-backend
+    - name: Deploy with Docker Compose
+      # This single command stops old containers, rebuilds the Java image, and starts both the DB and Backend
+      run: sudo docker compose up -d --build
