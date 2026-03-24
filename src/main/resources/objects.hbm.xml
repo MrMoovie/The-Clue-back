@@ -4,99 +4,198 @@
 
 
 <hibernate-mapping>
-    <class name="com.clue.entities.template.ClientEntity" table="clients" lazy="false">
+    <class name="com.clue.entities.PlayerEntity" table="players" lazy="false">
         <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
+        <property name="creationDate" type="java.util.Date" column="creation_date"/>
         <property name="deleted" type="boolean">
             <column name="deleted" default="false"/>
         </property>
         <property name="username" type="string" column="username"/>
         <property name="password" type="string" column="password"/>
-        <property name="contactInfo" type="string" column="contact_info"/>
-        <property name="fullName" type="string" column="full_name"/>
-        <property name="address" type="string" column="address"/>
         <property name="token" type="string" column="token"/>
+        <property name="fullName" type="string" column="full_name"/>
+        <property name="contactInfo" type="string" column="contact_info"/>
     </class>
 
-    <class name="com.clue.entities.template.ProffesionalEntity" table="professional" lazy="false">
+    <class name="com.clue.entities.Event" table="events" lazy="false">
         <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
+        <property name="creationDate" type="java.util.Date" column="creation_date"/>
         <property name="deleted" type="boolean">
             <column name="deleted" default="false"/>
         </property>
-        <property name="username" type="string" column="username"/>
-        <property name="password" type="string" column="password"/>
-        <property name="contactInfo" type="string" column="contact_info"/>
-        <property name="fullName" type="string" column="full_name"/>
-        <property name="areas" type="string" column="areas"/>
-        <property name="plan" type="int" column="plan"/>
-        <property name="token" type="string" column="token"/>
+        <property name="description" type="text" column="description"/>
     </class>
 
-    <class name="com.clue.entities.template.CategoryEntity" table="categories" lazy="false">
+    <class name="com.clue.entities.ItemEntity" table="items" lazy="false">
         <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
+        <property name="creationDate" type="java.util.Date" column="creation_date"/>
         <property name="deleted" type="boolean">
             <column name="deleted" default="false"/>
         </property>
         <property name="name" type="string" column="name"/>
+        <property name="context" type="text" column="context"/>
     </class>
 
-    <class name="com.clue.entities.template.ProffesionalCategoryEntity" table="professionals_categories" lazy="false">
+    <class name="com.clue.entities.SuspectEntity" table="suspects" lazy="false">
         <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
-        <many-to-one name="proffesionalEntity" column="professional_id"
-                     class="com.clue.entities.template.ProffesionalEntity"/>
-        <many-to-one name="categoryEntity" column="category_id"
-                     class="com.clue.entities.template.CategoryEntity"/>
-    </class>
-
-    <class name="com.clue.entities.template.PostEntity" table="posts" lazy="false">
-        <id name="id" type="int" column="id">
-            <generator class="native"/>
-        </id>
+        <property name="creationDate" type="java.util.Date" column="creation_date"/>
         <property name="deleted" type="boolean">
             <column name="deleted" default="false"/>
         </property>
-        <many-to-one name="clientEntity" column="client_id"
-                     class="com.clue.entities.template.ClientEntity"/>
-        <property name="text" type="string" column="text"/>
-        <many-to-one name="categoryEntity" column="category_id"
-                     class="com.clue.entities.template.CategoryEntity"/>
-        <property name="area" type="string" column="area"/>
-        <property name="fileLink" type="string" column="file_link"/>
-
+        <property name="name" type="string" column="name"/>
+        <property name="backGround" type="text" column="background"/>
+        <property name="pov" type="text" column="pov"/>
+        <property name="chatHistory" type="text" column="chat_history"/>
     </class>
 
-    <class name="com.clue.entities.template.BidEntity" table="bids" lazy="false">
+    <class name="com.clue.entities.GameEntity" table="games" lazy="false">
         <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
-        <many-to-one name="proffesionalEntity" column="proffessional_id"
-                     class="com.clue.entities.template.ProffesionalEntity"/>
-        <many-to-one name="postEntity" column="post_id"
-                     class="com.clue.entities.template.PostEntity"/>
-        <property name="status" type="int" column="status"/>
-        <property name="proposedPrice" type="float" column="proposed_price"/>
-        <property name="description" type="text" column="description"/>
-
-    </class>
-
-
-    <class name="com.clue.entities.template.MessageEntity" table="messages" lazy="false">
-        <id name="id" type="int" column="id">
-            <generator class="native"/>
-        </id>
-        <many-to-one name="bidEntity" column="bid_id"
-                     class="com.clue.entities.template.BidEntity"/>
-        <property name="content" type="string" column="content"/>
-        <property name="client" type="boolean" column="client"/>
         <property name="creationDate" type="java.util.Date" column="creation_date"/>
+        <property name="deleted" type="boolean">
+            <column name="deleted" default="false"/>
+        </property>
+
+        <many-to-one name="playerEntity" column="player_id"
+                     class="com.clue.entities.PlayerEntity"/>
+
+        <property name="fullStory" type="text" column="full_story"/>
+        <property name="brief" type="text" column="brief"/>
+
+        <property name="status" type="int" column="status"/>
+
+        <bag name="suspects" table="game_suspects" lazy="false">
+            <key column="game_id"/>
+            <many-to-many column="suspect_id" class="com.clue.entities.SuspectEntity"/>
+        </bag>
+
+        <bag name="items" table="game_items" lazy="false">
+            <key column="game_id"/>
+            <many-to-many column="item_id" class="com.clue.entities.ItemEntity"/>
+        </bag>
     </class>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--    <class name="com.clue.entities.template.ClientEntity" table="clients" lazy="false">-->
+<!--        <id name="id" type="int" column="id">-->
+<!--            <generator class="native"/>-->
+<!--        </id>-->
+<!--        <property name="deleted" type="boolean">-->
+<!--            <column name="deleted" default="false"/>-->
+<!--        </property>-->
+<!--        <property name="username" type="string" column="username"/>-->
+<!--        <property name="password" type="string" column="password"/>-->
+<!--        <property name="contactInfo" type="string" column="contact_info"/>-->
+<!--        <property name="fullName" type="string" column="full_name"/>-->
+<!--        <property name="address" type="string" column="address"/>-->
+<!--        <property name="token" type="string" column="token"/>-->
+<!--    </class>-->
+
+<!--    <class name="com.clue.entities.template.ProffesionalEntity" table="professional" lazy="false">-->
+<!--        <id name="id" type="int" column="id">-->
+<!--            <generator class="native"/>-->
+<!--        </id>-->
+<!--        <property name="deleted" type="boolean">-->
+<!--            <column name="deleted" default="false"/>-->
+<!--        </property>-->
+<!--        <property name="username" type="string" column="username"/>-->
+<!--        <property name="password" type="string" column="password"/>-->
+<!--        <property name="contactInfo" type="string" column="contact_info"/>-->
+<!--        <property name="fullName" type="string" column="full_name"/>-->
+<!--        <property name="areas" type="string" column="areas"/>-->
+<!--        <property name="plan" type="int" column="plan"/>-->
+<!--        <property name="token" type="string" column="token"/>-->
+<!--    </class>-->
+
+<!--    <class name="com.clue.entities.template.CategoryEntity" table="categories" lazy="false">-->
+<!--        <id name="id" type="int" column="id">-->
+<!--            <generator class="native"/>-->
+<!--        </id>-->
+<!--        <property name="deleted" type="boolean">-->
+<!--            <column name="deleted" default="false"/>-->
+<!--        </property>-->
+<!--        <property name="name" type="string" column="name"/>-->
+<!--    </class>-->
+
+<!--    <class name="com.clue.entities.template.ProffesionalCategoryEntity" table="professionals_categories" lazy="false">-->
+<!--        <id name="id" type="int" column="id">-->
+<!--            <generator class="native"/>-->
+<!--        </id>-->
+<!--        <many-to-one name="proffesionalEntity" column="professional_id"-->
+<!--                     class="com.clue.entities.template.ProffesionalEntity"/>-->
+<!--        <many-to-one name="categoryEntity" column="category_id"-->
+<!--                     class="com.clue.entities.template.CategoryEntity"/>-->
+<!--    </class>-->
+
+<!--    <class name="com.clue.entities.template.PostEntity" table="posts" lazy="false">-->
+<!--        <id name="id" type="int" column="id">-->
+<!--            <generator class="native"/>-->
+<!--        </id>-->
+<!--        <property name="deleted" type="boolean">-->
+<!--            <column name="deleted" default="false"/>-->
+<!--        </property>-->
+<!--        <many-to-one name="clientEntity" column="client_id"-->
+<!--                     class="com.clue.entities.template.ClientEntity"/>-->
+<!--        <property name="text" type="string" column="text"/>-->
+<!--        <many-to-one name="categoryEntity" column="category_id"-->
+<!--                     class="com.clue.entities.template.CategoryEntity"/>-->
+<!--        <property name="area" type="string" column="area"/>-->
+<!--        <property name="fileLink" type="string" column="file_link"/>-->
+
+<!--    </class>-->
+
+<!--    <class name="com.clue.entities.template.BidEntity" table="bids" lazy="false">-->
+<!--        <id name="id" type="int" column="id">-->
+<!--            <generator class="native"/>-->
+<!--        </id>-->
+<!--        <many-to-one name="proffesionalEntity" column="proffessional_id"-->
+<!--                     class="com.clue.entities.template.ProffesionalEntity"/>-->
+<!--        <many-to-one name="postEntity" column="post_id"-->
+<!--                     class="com.clue.entities.template.PostEntity"/>-->
+<!--        <property name="status" type="int" column="status"/>-->
+<!--        <property name="proposedPrice" type="float" column="proposed_price"/>-->
+<!--        <property name="description" type="text" column="description"/>-->
+
+<!--    </class>-->
+
+
+<!--    <class name="com.clue.entities.template.MessageEntity" table="messages" lazy="false">-->
+<!--        <id name="id" type="int" column="id">-->
+<!--            <generator class="native"/>-->
+<!--        </id>-->
+<!--        <many-to-one name="bidEntity" column="bid_id"-->
+<!--                     class="com.clue.entities.template.BidEntity"/>-->
+<!--        <property name="content" type="string" column="content"/>-->
+<!--        <property name="client" type="boolean" column="client"/>-->
+<!--        <property name="creationDate" type="java.util.Date" column="creation_date"/>-->
+<!--    </class>-->
 
 
 </hibernate-mapping>

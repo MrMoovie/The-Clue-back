@@ -34,6 +34,10 @@ public class SuspectEntity extends BaseEntity{
         return chatHistory;
     }
 
+    public void setChatHistory(String chatHistory) {
+        this.chatHistory = chatHistory;
+    }
+
     public void addChatHistory(String chatHistory, String role) {
         this.chatHistory = chatHistory;
     }

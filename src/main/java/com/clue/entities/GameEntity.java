@@ -3,12 +3,28 @@ package com.clue.entities;
 import java.util.List;
 
 public class GameEntity extends BaseEntity{
-    private PlayerEntity player;
+    private PlayerEntity playerEntity;
     private String fullStory;
     private String brief;
     private List<SuspectEntity> suspects;
     private List<ItemEntity> items;
     private int Status; //0 - started; 1 - finished
+
+    public PlayerEntity getPlayerEntity() {
+        return playerEntity;
+    }
+
+    public void setPlayerEntity(PlayerEntity playerEntity) {
+        this.playerEntity = playerEntity;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int status) {
+        Status = status;
+    }
 
     public String getFullStory() {
         return fullStory;
