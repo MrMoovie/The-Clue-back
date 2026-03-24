@@ -1,0 +1,24 @@
+name: Deploy Java Backend
+
+on:
+  push:
+    branches: [ "main" ] 
+
+jobs:
+  deploy:
+    runs-on: self-hosted 
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Build Docker Image
+      run: docker build -t quiz-backend .
+
+    - name: Stop Old Container
+      run: docker stop backend-container || true
+
+    - name: Remove Old Container
+      run: docker rm backend-container || true
+
+    - name: Run New Container
+      run: docker run -d -p 8080:8080 --name backend-container quiz-backend
