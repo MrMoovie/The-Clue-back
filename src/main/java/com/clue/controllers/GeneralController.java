@@ -30,7 +30,63 @@ public class GeneralController {
     public void init() {
     }
 
-    @RequestMapping("/login")
+//    @RequestMapping("/login")
+//    public BasicResponse getUser(String username, String password) {
+//        try {
+//            if (username == null || password == null) {
+//                return new BasicResponse(false, ERROR_MISSING_USERNAME_OR_PASSWORD);
+//            }
+//
+//            PlayerEntity playerEntity = persist.getUserByUsernameAndPassword(username, password);
+//
+//            if (playerEntity == null) {
+//                return new BasicResponse(false, ERROR_WRONG_CREDENTIALS);
+//            }
+//
+//            String token = GeneralUtils.hashMd5(username, password);
+//            playerEntity.setToken(token);
+//            persist.save(playerEntity);
+//
+//            return new LoginResponse(true, null, 1, token, playerEntity.getId());
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+//
+//    @RequestMapping("/signup")
+//    public BasicResponse addUser(String username, String password, String fullName) {
+//        try {
+//            if (username == null || password == null || fullName == null ) {
+//                return new BasicResponse(false, ERROR_MISSING_VALUES);
+//            }
+//
+//            PlayerEntity existingUser = persist.getPlayerByUsername(username);
+//
+//            if (existingUser != null) {
+//                return new BasicResponse(false, ERROR_USERNAME_ALREADY_EXISTS);
+//            }
+//
+//            PlayerEntity newPlayer = new PlayerEntity();
+//            newPlayer.setUsername(username);
+//            newPlayer.setPassword(password);
+//            newPlayer.setFullName(fullName);
+//
+//            String token = GeneralUtils.hashMd5(username, password);
+//            newPlayer.setToken(token);
+//
+//            persist.save(newPlayer);
+//
+//            return new LoginResponse(true, null, 1, token, newPlayer.getId());
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
+    @RequestMapping("/log")
     public BasicResponse getUser(String username, String password) {
         try {
             if (username == null || password == null) {
@@ -55,7 +111,7 @@ public class GeneralController {
         }
     }
 
-    @RequestMapping("/signup")
+    @RequestMapping("/sign")
     public BasicResponse addUser(String username, String password, String fullName) {
         try {
             if (username == null || password == null || fullName == null ) {
