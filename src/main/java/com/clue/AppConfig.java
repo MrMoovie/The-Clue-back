@@ -30,6 +30,7 @@ public class AppConfig {
 
     @Autowired
     private Environment env;
+    public static String GEMINI_API_KEY;
 
     @Bean
     public DataSource dataSource() throws Exception {
@@ -54,6 +55,8 @@ public class AppConfig {
         if (port == null) {
             port = DB_PORT;
         }
+        GEMINI_API_KEY = env.getProperty("GEMINI_API_KEY");
+
         Class.forName("com.mysql.jdbc.Driver");
         String createSchemaUrl = "jdbc:mysql://" + host + ":" + port + "/?useSSL=false&allowPublicKeyRetrieval=true";
         try (Connection connection = DriverManager.getConnection(createSchemaUrl, dbUser, dbPass);

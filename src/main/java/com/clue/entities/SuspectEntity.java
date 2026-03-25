@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class SuspectEntity extends BaseEntity{
     private String name;
-    private String backGround;
+    private String background;
     private String pov;
     private String chatHistory;
 
@@ -22,12 +22,12 @@ public class SuspectEntity extends BaseEntity{
         this.name = name;
     }
 
-    public String getBackGround() {
-        return backGround;
+    public String getBackground() {
+        return background;
     }
 
-    public void setBackGround(String backGround) {
-        this.backGround = backGround;
+    public void setBackground(String background) {
+        this.background = background;
     }
 
     public String getPov() {
@@ -45,6 +45,8 @@ public class SuspectEntity extends BaseEntity{
     public void setChatHistory(String chatHistory) {
         this.chatHistory = chatHistory;
     }
+
+
 
     public void addChatHistory(String role, String message) {
         try {

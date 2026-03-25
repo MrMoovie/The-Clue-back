@@ -5,6 +5,9 @@ import com.clue.entities.ItemEntity;
 import com.clue.entities.SuspectEntity;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.cfg.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -12,6 +15,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.clue.AppConfig.GEMINI_API_KEY;
 
 public class Gemini {
     private final String apiKey;
@@ -21,8 +26,10 @@ public class Gemini {
     private static final String STORY_MODEL_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=";
     private static final String CHAT_MODEL_URL =  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=";
 
+
+
     public Gemini() {
-        this.apiKey = "AIzaSyA4M4-uP4QR44vSWmwcO7jQhLK_HhyJPao";
+        this.apiKey = GEMINI_API_KEY;
         this.httpClient = HttpClient.newHttpClient();
         this.mapper = new ObjectMapper();
     }
@@ -88,7 +95,7 @@ public class Gemini {
             for (JsonNode sNode : gameData.get("suspects")) {
                 SuspectEntity suspect = new SuspectEntity();
                 suspect.setName(sNode.path("name").asText(null));
-                suspect.setBackGround(sNode.path("backGround").asText(null));
+                suspect.setBackground(sNode.path("backGround").asText(null));
                 suspect.setPov(sNode.path("pov").asText(null));
                 suspectList.add(suspect);
             }
@@ -110,7 +117,13 @@ public class Gemini {
         return game;
     }
 
-    public String chatWith(String characterName, String background, String pov, String formattedHistoryJson) throws Exception {
+    public String chatWith(SuspectEntity sus) throws Exception {
+
+        String characterName = sus.getName();
+        String background = sus.getBackground();
+        String pov = sus.getPov();
+        String formattedHistoryJson = sus.getChatHistory();
+
         String systemInstruction = String.format(
                 "You are a character in a murder mystery game. Never break character. Your name is: %s. Your background: %s. The truth you know (your POV): %s. Keep your answers concise, act defensively, and protect your own interests. Do not confess or volunteer information unless explicitly confronted with irrefutable evidence. If you are the killer, deflect blame.",
                 characterName, background, pov
@@ -132,6 +145,7 @@ public class Gemini {
         """.formatted(systemInstruction, historyWithComma);
 
         String rawResponse = sendRequest(CHAT_MODEL_URL, payload);
+        // System.out.println(rawResponse);
         return extractTextFromJson(rawResponse);
     }
 

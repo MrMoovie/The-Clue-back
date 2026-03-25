@@ -18,4 +18,6 @@ public class Constants {
 
     public static final int USER_TYPE_CLIENT = 1;
     public static final int USER_TYPE_PROFESSIONAL = 2;
+    public static final String ROLE_USER = "user";
+    public static final String ROLE_MODEL = "model";
 }

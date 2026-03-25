@@ -51,7 +51,7 @@
             <column name="deleted" default="false"/>
         </property>
         <property name="name" type="string" column="name"/>
-        <property name="backGround" type="text" column="background"/>
+        <property name="background" type="text" column="background"/>
         <property name="pov" type="text" column="pov"/>
         <property name="chatHistory" type="text" column="chat_history"/>
     </class>
