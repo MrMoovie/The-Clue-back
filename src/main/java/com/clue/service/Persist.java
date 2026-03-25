@@ -2,6 +2,7 @@ package com.clue.service;
 
 
 import com.clue.entities.PlayerEntity;
+import com.clue.entities.SuspectEntity;
 import com.clue.entities.template.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -83,7 +84,15 @@ public class Persist {
                 .setParameter("password", password)
                 .uniqueResult();
     }
-
+    public SuspectEntity getPlayerSuspect(int playerId, int suspectId) {
+        return this.sessionFactory.getCurrentSession()
+                .createQuery(
+                        "SELECT s FROM GameEntity g JOIN g.suspects s " +
+                                "WHERE g.playerEntity.id = :playerId AND s.id = :suspectId", SuspectEntity.class)
+                .setParameter("playerId", playerId)
+                .setParameter("suspectId", suspectId)
+                .uniqueResult();
+    }
 //    public List<PostEntity> getPostsByClientId(int clientId) {
 //        return this.sessionFactory.getCurrentSession()
 //                .createQuery("FROM PostEntity " +

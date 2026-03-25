@@ -9,6 +9,7 @@ import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.clue.AppConfig.GEMINI_API_KEY;
-
 public class Gemini {
     private final String apiKey;
     private final HttpClient httpClient;

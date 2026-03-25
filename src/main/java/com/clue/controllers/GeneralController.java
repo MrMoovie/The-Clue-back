@@ -6,25 +6,40 @@ import com.clue.entities.PlayerEntity;
 import com.clue.entities.SuspectEntity;
 import com.clue.entities.template.*;
 import com.clue.responses.*;
+import com.clue.service.Gemini;
 import com.clue.service.Persist;
 import com.clue.utils.GeneralUtils;
 import com.github.javafaker.GameOfThrones;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.Basic;
+import javax.sql.DataSource;
 
 import java.util.Collections;
 import java.util.List;
 
-import static com.clue.utils.Constants.USER_TYPE_CLIENT;
+import static com.clue.utils.Constants.*;
 import static com.clue.utils.Errors.*;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.sql.DataSource;
 
 @RestController
 public class GeneralController {
     @Autowired
     private Persist persist;
+
+    private final Gemini gemini = new Gemini();
 
     @PostConstruct
     public void init() {
@@ -86,7 +101,7 @@ public class GeneralController {
 //        }
 //    }
 
-    @RequestMapping("/log")
+    @RequestMapping("/login")
     public BasicResponse getUser(String username, String password) {
         try {
             if (username == null || password == null) {
@@ -111,10 +126,10 @@ public class GeneralController {
         }
     }
 
-    @RequestMapping("/sign")
+    @RequestMapping("/signup")
     public BasicResponse addUser(String username, String password, String fullName) {
         try {
-            if (username == null || password == null || fullName == null ) {
+            if (username == null || password == null || fullName == null) {
                 return new BasicResponse(false, ERROR_MISSING_VALUES);
             }
 
@@ -146,17 +161,79 @@ public class GeneralController {
     //-----------------------------------------------------------------------------
 
     @RequestMapping("/start-game")
-    public BasicResponse startGame(String token){
+    public BasicResponse startGame(String token, String topic) throws Exception {
         PlayerEntity player = persist.getPlayerByToken(token);
-        if(player==null){
+        if (player == null) {
             return new BasicResponse(false, ERROR_WRONG_CREDENTIALS);
         }
+        if (topic == null) {
+            return new BasicResponse(false, ERROR_MISSING_VALUES);
+        }
+        GameEntity game = gemini.generateNewGame(topic);
+        game.setPlayerEntity(player);
 
-        return null;
+        return new GameResponse(true, null, game);
     }
 
+    //-------------------------------------------------------------------------------
+
+    @RequestMapping("/get-chat-history")
+    public BasicResponse getChatHistory(String token, Integer suspectID) {
+        PlayerEntity player = persist.getPlayerByToken(token);
+        if (player == null) {
+            return new BasicResponse(false, ERROR_WRONG_CREDENTIALS);
+        }
+        if (suspectID == null) {
+            return new BasicResponse(false, ERROR_MISSING_VALUES);
+        }
+        SuspectEntity suspect = persist.getPlayerSuspect(player.getId(), suspectID);
+        if (suspect == null) {
+            return new BasicResponse(false, ERROR_SUSPECT_NOT_FOUND);
+        }
+        return new ChatHistoryResponse(true, null, suspect.getChatHistory());
+    }
+
+    @RequestMapping("/chat-with")
+    public BasicResponse chatWith(String token, String message, Integer suspectID) throws Exception {
+        PlayerEntity player = persist.getPlayerByToken(token);
+        if (player == null) {
+            return new BasicResponse(false, ERROR_WRONG_CREDENTIALS);
+        }
+        if (message == null || suspectID == null) {
+            return new BasicResponse(false, ERROR_MISSING_VALUES);
+        }
+
+        SuspectEntity suspect = persist.getPlayerSuspect(player.getId(), suspectID);
+        suspect.addChatHistory(ROLE_USER, message);
+        String response = gemini.chatWith(suspect);
+        suspect.addChatHistory(ROLE_MODEL, response);
+
+        return new ChatWithResponse(true, null, response);
+    }
+
+    //------------------------------------------------------------------------------------
 
 
+    // Inject the DataSource that Spring Boot has already configured for you
+    @Autowired
+    private DataSource dataSource;
+
+    @RequestMapping("/test")
+    public String runTestSql() {
+        try {
+            ClassPathResource resource = new ClassPathResource("test.sql");
+
+            ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
+
+            databasePopulator.execute(dataSource);
+
+            return "Successfully executed test.sql! Database is populated with fake data.";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error executing test.sql: " + e.getMessage();
+        }
+    }
 
 
 //    @RequestMapping("/get-user-posts")
