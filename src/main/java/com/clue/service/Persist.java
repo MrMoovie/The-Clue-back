@@ -118,13 +118,13 @@ public class Persist {
 //                .uniqueResult();
 //    }
 
-//    public ClientEntity getClientByToken(String token) {
-//        return this.sessionFactory.getCurrentSession()
-//                .createQuery("FROM ClientEntity " +
-//                        "WHERE token = :token", ClientEntity.class)
-//                .setParameter("token", token)
-//                .uniqueResult();
-//    }
+    public PlayerEntity getPlayerByToken(String token) {
+        return this.sessionFactory.getCurrentSession()
+                .createQuery("FROM PlayerEntity " +
+                        "WHERE token = :token", PlayerEntity.class)
+                .setParameter("token", token)
+                .uniqueResult();
+    }
 //
 //    public ProffesionalEntity getProfessionalByToken(String token) {
 //        return this.sessionFactory.getCurrentSession()

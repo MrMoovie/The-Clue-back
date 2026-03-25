@@ -1,16 +1,19 @@
 package com.clue.controllers;
 
 import com.clue.entities.BaseEntity;
+import com.clue.entities.GameEntity;
 import com.clue.entities.PlayerEntity;
 import com.clue.entities.SuspectEntity;
 import com.clue.entities.template.*;
 import com.clue.responses.*;
 import com.clue.service.Persist;
 import com.clue.utils.GeneralUtils;
+import com.github.javafaker.GameOfThrones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.Basic;
 
 import java.util.Collections;
 import java.util.List;
@@ -85,6 +88,16 @@ public class GeneralController {
 
 
     //-----------------------------------------------------------------------------
+
+    @RequestMapping("/start-game")
+    public BasicResponse startGame(String token){
+        PlayerEntity player = persist.getPlayerByToken(token);
+        if(player==null){
+            return new BasicResponse(false, ERROR_WRONG_CREDENTIALS);
+        }
+
+        return null;
+    }
 
 
 
