@@ -4,15 +4,12 @@ public class LoginResponse extends BasicResponse {
     private int permission;
     private String token;
     private int id;
-    private int userType;
 
-    public LoginResponse(boolean success, Integer errorCode, int permission, String token, int id,
-                         int userType) {
+    public LoginResponse(boolean success, Integer errorCode, int permission, String token, int id) {
         super(success, errorCode);
         this.permission = permission;
         this.token = token;
         this.id = id;
-        this.userType = userType;
     }
 
     public LoginResponse(int permission, String token, int id) {
@@ -47,13 +44,5 @@ public class LoginResponse extends BasicResponse {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public int getUserType() {
-        return userType;
-    }
-
-    public void setUserType(int userType) {
-        this.userType = userType;
     }
 }
