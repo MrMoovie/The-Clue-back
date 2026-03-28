@@ -13,6 +13,10 @@ public class SuspectEntity extends BaseEntity{
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
+    public SuspectEntity() {
+        addChatHistory("user", "Hello!");
+    }
+
 
     public String getName() {
         return name;

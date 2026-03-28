@@ -55,7 +55,6 @@ public class AppConfig {
         if (port == null) {
             port = DB_PORT;
         }
-        GEMINI_API_KEY = env.getProperty("GEMINI_API_KEY");
 
         Class.forName("com.mysql.jdbc.Driver");
         String createSchemaUrl = "jdbc:mysql://" + host + ":" + port + "/?useSSL=false&allowPublicKeyRetrieval=true";
