@@ -172,6 +172,8 @@ public class GeneralController {
         GameEntity game = gemini.generateNewGame(topic);
         game.setPlayerEntity(player);
 
+        persist.save(game);
+
         return new GameResponse(true, null, game);
     }
 

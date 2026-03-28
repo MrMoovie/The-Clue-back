@@ -5,8 +5,8 @@ import com.clue.entities.ItemEntity;
 import com.clue.entities.SuspectEntity;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -27,9 +27,16 @@ public class Gemini {
     private static final String CHAT_MODEL_URL =  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=";
 
 
-
+    private Environment env;
     public Gemini() {
-        this.apiKey = GEMINI_API_KEY;
+        this.apiKey = System.getenv("GEMINI_API_KEY");
+//        try {
+//            this.apiKey = this.env.getProperty("GEMINI_API_KEY");
+//        } catch (RuntimeException e) {
+//            throw new RuntimeException(e);
+//        }
+
+        System.out.println("\n\n[!!!!]" + apiKey + "\n\n");
         this.httpClient = HttpClient.newHttpClient();
         this.mapper = new ObjectMapper();
     }
