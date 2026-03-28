@@ -23,8 +23,8 @@ public class Gemini {
     private final HttpClient httpClient;
     private final ObjectMapper mapper;
 
-    private static final String STORY_MODEL_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=";
-    private static final String CHAT_MODEL_URL =  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=";
+    private static final String STORY_MODEL_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=";
+    private static final String CHAT_MODEL_URL =  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=";
 
 
     private Environment env;
