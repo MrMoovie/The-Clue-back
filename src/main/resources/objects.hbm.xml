@@ -73,12 +73,12 @@
 
         <property name="status" type="int" column="status"/>
 
-        <bag name="suspects" table="game_suspects" lazy="false">
+        <bag name="suspects" table="game_suspects" lazy="false" cascade="save-update">
             <key column="game_id"/>
             <many-to-many column="suspect_id" class="com.clue.entities.SuspectEntity"/>
         </bag>
 
-        <bag name="items" table="game_items" lazy="false">
+        <bag name="items" table="game_items" lazy="false" cascade="save-update">
             <key column="game_id"/>
             <many-to-many column="item_id" class="com.clue.entities.ItemEntity"/>
         </bag>
