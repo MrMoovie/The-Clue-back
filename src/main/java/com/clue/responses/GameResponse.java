@@ -8,14 +8,20 @@ import java.util.List;
 
 public class GameResponse extends BasicResponse{
     private String brief;
-    private List<SuspectEntity> suspects;
+
     private List<ItemEntity> items;
+
+    private List<SuspectResponse> suspectResponses;
 
     public GameResponse(boolean success, Integer errorCode, GameEntity game){
         super(success, errorCode);
+        for(SuspectEntity sus : game.getSuspects()){
+            suspectResponses.add(new SuspectResponse(sus.getName(), sus.getChatHistory()));
+        }
+
+
         this.brief = game.getBrief();
         this.items = game.getItems();
-        this.suspects = game.getSuspects();
     }
 
     public String getBrief() {
@@ -24,14 +30,6 @@ public class GameResponse extends BasicResponse{
 
     public void setBrief(String brief) {
         this.brief = brief;
-    }
-
-    public List<SuspectEntity> getSuspects() {
-        return suspects;
-    }
-
-    public void setSuspects(List<SuspectEntity> suspects) {
-        this.suspects = suspects;
     }
 
     public List<ItemEntity> getItems() {
